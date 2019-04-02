@@ -1,0 +1,14 @@
+/* eslint-disable react/prefer-stateless-function */
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+
+const App = () => (
+  <div>
+    <h1>Hi world</h1>
+  </div>
+);
+
+ReactDOM.render(
+  <App />, document.getElementById('app'),
+);
