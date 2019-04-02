@@ -35,12 +35,10 @@
     "url-loader": "^1.1.2",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.2.3",
-    "webpack-dev-server": "^3.2.1"
-  },
-  "devDependencies": {
-    "eslint-config-airbnb": "^17.1.0",
+     "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.16.0",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4"
-  }
+    "webpack-dev-server": "^3.2.1"
+  },
 }
