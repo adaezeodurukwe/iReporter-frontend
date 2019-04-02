@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "start": "webpack-dev-server --mode development --config webpack.config.js",
+    "start": "webpack-dev-server --mode development --config webpack.config.js --env=production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
