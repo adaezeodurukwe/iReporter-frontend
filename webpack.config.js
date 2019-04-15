@@ -7,6 +7,9 @@ module.exports = env => ({
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
   },
+  resolve: {
+    extensions: ['.js', '.jsx', '.json', '.css'],
+  },
   module: {
     rules: [
       {
