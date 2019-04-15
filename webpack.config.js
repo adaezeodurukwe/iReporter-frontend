@@ -1,25 +1,25 @@
-let path = require('path');
-let HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
+module.exports = env => ({
   entry: './src/index.jsx',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   module: {
     rules: [
       {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
-        use: ['babel-loader', 'eslint-loader']
+        use: ['babel-loader', 'eslint-loader'],
       },
       {
-        test:/\.html$/,
+        test: /\.html$/,
         use: {
-          loader: "html-loader",
-          options: { minimize: true }
-        }
+          loader: 'html-loader',
+          options: { minimize: true },
+        },
       },
       {
         test: /\.css$/,
@@ -31,18 +31,23 @@ module.exports = {
           {
             loader: 'url-loader',
             options: {
-              limit: 8192
-            }
-          }
-        ]
-      }
-    ]
+              limit: 8192,
+              name: '[name].[ext]',
+              outputPath: './assets/img/',
+            },
+          },
+        ],
+      },
+    ],
   },
-  mode: 'development',
+  devtool: env.production ? 'source-maps' : 'eval',
   plugins: [
-      new HtmlWebpackPlugin({
-          template: './src/index.html',
-          filename: "index.html"
-      })
-  ]
-}
+    new HtmlWebpackPlugin({
+      template: './src/index.html',
+      filename: 'index.html',
+    }),
+  ],
+  devServer: {
+    historyApiFallback: true,
+  },
+});
