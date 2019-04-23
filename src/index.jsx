@@ -2,6 +2,9 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 
+// Import CSS
+import './assets/css/main.css';
+
 // import views
 import HomePage from './components/Home';
 import AdminPage from './components/Admin';
