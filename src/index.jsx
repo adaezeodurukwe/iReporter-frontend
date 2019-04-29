@@ -2,7 +2,11 @@
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import {
+  BrowserRouter,
+  Switch,
+  Route,
+} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import ReduxPromise from 'redux-promise';
@@ -25,6 +29,7 @@ import SignUpPage from './components/Signup';
 import UpdatePage from './components/Update';
 import ProfilePage from './components/Profile';
 import FaqPage from './components/Faq';
+import history from './components/history';
 
 // Create Store
 const store = createStore(reducers, applyMiddleware(ReduxPromise));
@@ -41,11 +46,11 @@ const App = () => (
         <Route exact path="/admin" component={AdminPage} />
         <Route exact path="/create" component={CreatePage} />
         <Route exact path="/details" component={DetailsPage} />
-        <Route exact path="/signin" component={SigiInPage} />
         <Route exact path="/update" component={UpdatePage} />
-        <Route exact path="/profile" component={ProfilePage} />
-        <Route exact path="/" render={() => <Default><HomePage /></Default>} />
         <Route path="/signup" render={() => <Default><SignUpPage /></Default>} />
+        <Route path="/signin" render={() => <Default><SigiInPage history={history} /></Default>} />
+        <Route path="/profile" render={() => <Default><ProfilePage /></Default>} />
+        <Route exact path="/" render={() => <Default><HomePage history={history} /></Default>} />
         <Route exact path="/faq" component={FaqPage} />
       </Switch>
     </BrowserRouter>

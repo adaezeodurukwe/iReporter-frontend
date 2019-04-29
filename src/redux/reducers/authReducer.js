@@ -1,7 +1,14 @@
-import { SIGN_UP, SIGN_UP_ERROR, CLEAR_ERROR } from '../actions';
+import {
+  SIGN_UP,
+  SIGN_UP_ERROR,
+  CLEAR_ERROR,
+  LOGIN,
+  LOGIN_ERROR,
+} from '../actions';
 
 const initialState = {
   signedUp: false,
+  loggedIn: false,
   error: {},
 };
 
@@ -27,6 +34,16 @@ const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: {},
+      };
+    case LOGIN_ERROR:
+      return {
+        ...state,
+        error: payload,
+      };
+    case LOGIN:
+      return {
+        ...state,
+        loggedIn: true,
       };
     default:
       return state;

@@ -4,6 +4,8 @@ import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { func, bool, object as objectProp } from 'prop-types';
 import _ from 'underscore';
+
+// Import actions
 import { signUp, clear } from '../redux/actions';
 
 // Import components
