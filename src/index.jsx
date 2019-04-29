@@ -51,9 +51,9 @@ const App = () => (
         <Route path="/signup" render={() => <Default><SignUpPage /></Default>} />
         <Route path="/signin" render={() => <Default><SigiInPage history={history} /></Default>} />
         <Route path="/profile" render={() => <Default><ProfilePage /></Default>} />
+        <Route path="/faq" render={() => <Default><FaqPage /></Default>} />
         <Route path="/records" render={() => <Default><RecordsPage history={history} /></Default>} />
         <Route exact path="/" render={() => <Default><HomePage history={history} /></Default>} />
-        <Route exact path="/faq" component={FaqPage} />
       </Switch>
     </BrowserRouter>
   </Provider>
