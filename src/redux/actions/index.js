@@ -8,6 +8,7 @@ export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const LOGIN = 'LOGIN';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
+export const GET_RECORDS = 'GET_RECORDS';
 
 /**
  * @function signUp
@@ -60,5 +61,18 @@ export async function signIn(values) {
 export function clear() {
   return {
     type: CLEAR_ERROR,
+  };
+}
+
+/**
+ * @function getRecords
+ * @returns {object} records
+ */
+export async function getRecords() {
+  const request = axios.get(`${BASE_URL}/records`);
+
+  return {
+    type: GET_RECORDS,
+    payload: request,
   };
 }

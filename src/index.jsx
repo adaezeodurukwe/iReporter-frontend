@@ -30,6 +30,7 @@ import UpdatePage from './components/Update';
 import ProfilePage from './components/Profile';
 import FaqPage from './components/Faq';
 import history from './components/history';
+import RecordsPage from './components/Records';
 
 // Create Store
 const store = createStore(reducers, applyMiddleware(ReduxPromise));
@@ -50,6 +51,7 @@ const App = () => (
         <Route path="/signup" render={() => <Default><SignUpPage /></Default>} />
         <Route path="/signin" render={() => <Default><SigiInPage history={history} /></Default>} />
         <Route path="/profile" render={() => <Default><ProfilePage /></Default>} />
+        <Route path="/records" render={() => <Default><RecordsPage history={history} /></Default>} />
         <Route exact path="/" render={() => <Default><HomePage history={history} /></Default>} />
         <Route exact path="/faq" component={FaqPage} />
       </Switch>
