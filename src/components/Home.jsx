@@ -8,9 +8,6 @@ import {
   shape,
 } from 'prop-types';
 
-// Import components
-import Nav from './NavBar';
-import Foot from './Footer';
 
 // Import images
 import opportunity from '../assets/img/opportunity.png';
@@ -20,9 +17,13 @@ import conversation from '../assets/img/conversation.png';
 // Import image
 import scrutiny from '../assets/img/scrutiny.png';
 
+/**
+ * @function Home
+ * @param {*} state
+ * @returns {HTMLElement} home page
+ */
 const Home = ({ history }) => (
   <div className="container">
-    <Nav />
     <div className="header">
       <div className="header-img">
         <img src={scrutiny} alt="home img" />
@@ -84,7 +85,6 @@ const Home = ({ history }) => (
         </p>
       </div>
     </div>
-    <Foot />
   </div>
 );
 
