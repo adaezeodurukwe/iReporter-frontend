@@ -190,7 +190,8 @@ footer{
  background: #343a40;
  color: #ECF0F1;
  padding: 2% 0;
- bottom: 0px;
+ position: absolute;
+ bottom: 0;
  width: 100%;
 }
 
