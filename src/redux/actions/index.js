@@ -9,6 +9,7 @@ export const CLEAR_ERROR = 'CLEAR_ERROR';
 export const LOGIN = 'LOGIN';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const GET_RECORDS = 'GET_RECORDS';
+export const GET_RECORD = 'GET_RECORD';
 
 /**
  * @function signUp
@@ -69,10 +70,25 @@ export function clear() {
  * @returns {object} records
  */
 export async function getRecords() {
-  const request = axios.get(`${BASE_URL}/records`);
+  const request = await axios.get(`${BASE_URL}/records`);
 
   return {
     type: GET_RECORDS,
+    payload: request,
+  };
+}
+
+/**
+ * @function clear
+ * @param {string} type
+ * @param {uuid} id
+ * @returns {object} clear
+ */
+export async function getRecord(type, id) {
+  const request = await axios.get(`${BASE_URL}/${type}/${id}`);
+
+  return {
+    type: GET_RECORD,
     payload: request,
   };
 }

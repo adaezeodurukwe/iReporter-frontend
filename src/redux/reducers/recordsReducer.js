@@ -1,9 +1,11 @@
 import {
   GET_RECORDS,
+  GET_RECORD,
 } from '../actions';
 
 const initialState = {
   records: [],
+  record: {},
 };
 
 /**
@@ -18,6 +20,12 @@ const recordReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         records: payload.data.data,
+      };
+    case GET_RECORD:
+      return {
+        ...state,
+        record: payload,
+        records: [],
       };
     default:
       return state;
