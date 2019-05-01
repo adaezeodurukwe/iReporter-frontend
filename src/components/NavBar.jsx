@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+/**
+ * @function NavBar
+ * @returns {HTMLElement} nav bar
+ */
 const NavBar = () => (
   <div>
     <nav>

@@ -31,10 +31,11 @@ class Records extends Component {
   displayRecords = () => {
     const { records } = this.props;
     let content = '';
-    if (_.isEmpty(records)) content = <div>NO RECORD</div>;
+    if (_.isEmpty(records)) content = <div className="none">NO RECORD</div>;
     else {
       content = records.map((record, index) => {
         const img = record.type === 'intervention' ? report : flag;
+        const recordType = record.type.replace(/ /g, '');
         return (
           <div key={index.toString()} className="cards">
             <h4>
@@ -48,7 +49,7 @@ class Records extends Component {
                 {record.status}
               </i>
             </p>
-            <Link to="../details">
+            <Link to={`../details/${recordType}/${record.id}`}>
               <button type="button">
                 Details
               </button>
