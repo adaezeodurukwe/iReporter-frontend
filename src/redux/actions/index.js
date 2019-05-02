@@ -15,6 +15,8 @@ export const GET_RECORD = 'GET_RECORD';
 export const GET_USER_RECORDS = 'GET_USER_RECORDS';
 export const UPDATE_RECORD = 'UPDATE_RECORD';
 export const UPDATE_RECORD_ERROR = 'UPDATE_RECORD_ERROR';
+export const DELETE_RECORD = 'DELETE_RECORD';
+export const DELETE_RECORD_ERROR = 'DELETE_RECORD_ERROR';
 
 /**
  * @function signUp
@@ -78,6 +80,31 @@ export async function createRecord(values) {
   } catch (error) {
     return {
       type: CREATE_RECORD_ERROR,
+      payload: error.response.data,
+    };
+  }
+}
+
+/**
+ * @function deleteRecord
+ * @param {*} type
+ * @param {*} id
+ * @returns {object} response
+ */
+export async function deleteRecord(type, id) {
+  const recordType = type === 'intervention' ? 'interventions' : 'red-flags';
+  const token = localStorage.getItem('iReporterToken');
+
+  try {
+    const request = await axios.delete(`${BASE_URL}/${recordType}/${id}`, { headers: { 'x-access-token': token } });
+
+    return {
+      type: DELETE_RECORD,
+      payload: request,
+    };
+  } catch (error) {
+    return {
+      type: DELETE_RECORD_ERROR,
       payload: error.response.data,
     };
   }

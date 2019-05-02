@@ -7,6 +7,7 @@ import {
   CLEAR_ERROR,
   UPDATE_RECORD_ERROR,
   UPDATE_RECORD,
+  DELETE_RECORD
 } from '../actions';
 
 const initialState = {
@@ -15,6 +16,7 @@ const initialState = {
   error: {},
   created: false,
   updated: true,
+  deleted: false
 };
 
 /**
@@ -68,6 +70,15 @@ const recordReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: {},
+        created: false,
+        updated: false,
+        deleted: false,
+      };
+    case DELETE_RECORD:
+      return {
+        ...state,
+        error: {},
+        deleted: true,
         created: false,
         updated: false,
       };

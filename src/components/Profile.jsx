@@ -11,7 +11,12 @@ import {
 import _ from 'underscore';
 
 // Import Action
-import { getUserRecord, clear, updateRecord } from '../redux/actions';
+import {
+  getUserRecord,
+  clear,
+  updateRecord,
+  deleteRecord
+} from '../redux/actions';
 
 // import Component
 import Dashboard from './DashboardStatus';
@@ -49,6 +54,16 @@ class Profile extends Component {
   getType = (type, id) => {
     const { show } = this.state;
     this.setState({ type, id, show: !show });
+  }
+
+  /**
+   * @param {string} type
+   * @param {string} id
+   * @returns {undefined}
+   */
+  delete = (type, id) => {
+    const { deleteOne } = this.props;
+    deleteOne(type, id);
   }
 
   displayRecords = () => {
@@ -90,7 +105,7 @@ class Profile extends Component {
                     <button type="button" className="view">View</button>
                   </Link>
                   <button type="button" onClick={() => { this.getType(recordType, record.id); }} className="edit">Update</button>
-                  <button type="button" className="delete">Delete</button>
+                  <button type="button" onClick={() => { this.delete(recordType, record.id); }} className="delete">Delete</button>
                 </div>
               </div>
               <div className={`update ${newclass}`}>
@@ -158,8 +173,12 @@ class Profile extends Component {
    * @returns {HTMLElement} profile
    */
   render() {
-    const { records, updated, error } = this.props;
-    if (updated) this.reload();
+    const {
+      records, updated, error, deleted
+    } = this.props;
+
+    if (updated || deleted) this.reload();
+
     let draft = 0;
     let investigation = 0;
     let resolved = 0;
@@ -210,7 +229,8 @@ function mapDispatchToProps(dispatch) {
   return (bindActionCreators({
     getRecords: getUserRecord,
     clearErrors: clear,
-    updateOne: updateRecord
+    updateOne: updateRecord,
+    deleteOne: deleteRecord,
   }, dispatch));
 }
 
@@ -220,15 +240,27 @@ function mapDispatchToProps(dispatch) {
  * @returns {object} state
  */
 function mapStateToProps({ recs }) {
-  const { records, updated, error } = recs;
-  return { records, updated, error };
+  const {
+    records,
+    updated,
+    error,
+    deleted
+  } = recs;
+  return {
+    records,
+    updated,
+    error,
+    deleted
+  };
 }
 
 Profile.propTypes = {
   updateOne: func.isRequired,
+  deleteOne: func.isRequired,
   getRecords: func.isRequired,
   records: arrayProp.isRequired,
   updated: bool.isRequired,
+  deleted: bool.isRequired,
   error: objecrProb.isRequired,
   clearErrors: func.isRequired,
 };
