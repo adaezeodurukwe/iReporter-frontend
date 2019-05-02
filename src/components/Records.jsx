@@ -76,7 +76,7 @@ class Records extends Component {
         <div className="records-body">
           <div className="records-main" id="main">
             <div className="cards">
-              <a className="add" href="create.html"><img src={add} alt="add" /></a>
+              <Link to="./create"><img src={add} alt="add" /></Link>
             </div>
             {this.displayRecords()}
           </div>

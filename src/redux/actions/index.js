@@ -6,10 +6,13 @@ const BASE_URL = 'https://ireporter-endpoints.herokuapp.com/api/v1';
 export const SIGN_UP = 'SIGN_UP';
 export const SIGN_UP_ERROR = 'SIGN_UP_ERROR';
 export const CLEAR_ERROR = 'CLEAR_ERROR';
+export const CREATE_RECORD = 'CREATE_RECORD';
+export const CREATE_RECORD_ERROR = 'CREATE_RECORD_ERROR';
 export const LOGIN = 'LOGIN';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const GET_RECORDS = 'GET_RECORDS';
 export const GET_RECORD = 'GET_RECORD';
+export const GET_USER_RECORDS = 'GET_USER_RECORDS';
 
 /**
  * @function signUp
@@ -35,7 +38,6 @@ export async function signUp(values) {
 /**
  * @function signIn
  * @param {*} values
- *  @param {*} setToken
  * @returns {object} response
  */
 export async function signIn(values) {
@@ -50,6 +52,30 @@ export async function signIn(values) {
   } catch (error) {
     return {
       type: LOGIN_ERROR,
+      payload: error.response.data,
+    };
+  }
+}
+
+/**
+ * @function signIn
+ * @param {*} values
+ * @returns {object} response
+ */
+export async function createRecord(values) {
+  const type = values.type === 'intervention' ? 'interventions' : 'red-flags';
+  const token = localStorage.getItem('iReporterToken');
+
+  try {
+    const request = await axios.post(`${BASE_URL}/${type}`, values, { headers: { 'x-access-token': token } });
+
+    return {
+      type: CREATE_RECORD,
+      payload: request,
+    };
+  } catch (error) {
+    return {
+      type: CREATE_RECORD_ERROR,
       payload: error.response.data,
     };
   }
@@ -89,6 +115,27 @@ export async function getRecord(type, id) {
 
   return {
     type: GET_RECORD,
+    payload: request,
+  };
+}
+
+/**
+ * @function clear
+ * @param {string} type
+ * @param {uuid} id
+ * @returns {object} clear
+ */
+export async function getUserRecord() {
+  const token = localStorage.getItem('iReporterToken');
+  const [redFlagsRequest, interventionsRequest] = await Promise.all([
+    axios.get(`${BASE_URL}/red-flags`, { headers: { 'x-access-token': token } }),
+    axios.get(`${BASE_URL}/interventions`, { headers: { 'x-access-token': token } })
+  ]);
+
+  const request = redFlagsRequest.data.data.concat(interventionsRequest.data.data);
+
+  return {
+    type: GET_USER_RECORDS,
     payload: request,
   };
 }

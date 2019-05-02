@@ -1,11 +1,17 @@
 import {
   GET_RECORDS,
   GET_RECORD,
+  GET_USER_RECORDS,
+  CREATE_RECORD,
+  CREATE_RECORD_ERROR,
+  CLEAR_ERROR,
 } from '../actions';
 
 const initialState = {
   records: [],
   record: {},
+  error: {},
+  created: false,
 };
 
 /**
@@ -26,6 +32,29 @@ const recordReducer = (state = initialState, { type, payload }) => {
         ...state,
         record: payload,
         records: [],
+      };
+    case GET_USER_RECORDS:
+      return {
+        ...state,
+        record: {},
+        records: payload,
+      };
+    case CREATE_RECORD:
+      return {
+        ...state,
+        record: payload,
+        created: true,
+      };
+    case CREATE_RECORD_ERROR:
+      return {
+        ...state,
+        error: payload,
+      };
+    case CLEAR_ERROR:
+      return {
+        ...state,
+        error: {},
+        created: false,
       };
     default:
       return state;

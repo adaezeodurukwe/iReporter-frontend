@@ -15,6 +15,7 @@ import {
 // Import map
 import Map from './MapContainer';
 
+// Import Action
 import { getRecord } from '../redux/actions';
 
 
@@ -89,7 +90,6 @@ class Details extends Component {
    * @returns {HTMLElement} details
    */
   render() {
-    console.log(this.props);
     return (
       <div className="records">
         <h2>DETAILS</h2>
