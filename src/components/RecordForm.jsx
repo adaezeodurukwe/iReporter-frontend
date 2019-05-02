@@ -14,7 +14,7 @@ import _ from 'underscore';
 
 
 // Import actions
-import { createRecord, clear } from '../redux/actions';
+import { createRecord, clear, getRecord } from '../redux/actions';
 
 // Import components
 import Toast from './Toast';
@@ -24,6 +24,19 @@ import Toast from './Toast';
  * @returns {HTMLElement} sign-in form
  */
 class RecordForm extends Component {
+  /**
+   * @method componentDidMount
+   * @returns {object} Article details
+   */
+  componentDidMount() {
+    const { match, getSingleRecord } = this.props;
+
+    if (match.id && match.type) {
+      const recordType = match.type === 'intervention' ? 'interventions' : 'red-flags';
+      return getSingleRecord(recordType, match.id);
+    }
+  }
+
   clearAuthError = () => {
     const { clearError } = this.props;
     clearError();
@@ -85,11 +98,13 @@ class RecordForm extends Component {
     const addedClass = _.isEmpty(error) ? '' : 'show';
 
     const message = _.isEmpty(error) ? '' : error.message;
+
+    const disabled = formHeader === 'Create Record';
     return (
       <form className="form-container" onSubmit={handleSubmit(this.onSubmit)}>
         <h1><i>{formHeader}</i></h1>
         <div className="create">
-          <Field name="type" component="select" id="type">
+          <Field name="type" component="select" id="type" disabled={!disabled}>
             <option>Choose Type</option>
             <option value="red flag">Red Flag</option>
             <option value="intervention">Intervention</option>
@@ -142,6 +157,7 @@ function mapDispatchToProps(dispatch) {
   return (bindActionCreators({
     createNewRecord: createRecord,
     clearError: clear,
+    getSingleRecord: getRecord,
   }, dispatch));
 }
 
@@ -161,11 +177,17 @@ function mapStateToProps({ records }) {
 RecordForm.propTypes = {
   createNewRecord: func.isRequired,
   handleSubmit: func.isRequired,
+  getSingleRecord: func.isRequired,
   history: objectProp.isRequired,
   created: bool.isRequired,
   error: objectProp.isRequired,
   clearError: func.isRequired,
   formHeader: string.isRequired,
+  match: objectProp,
+};
+
+RecordForm.defaultProps = {
+  match: {}
 };
 
 

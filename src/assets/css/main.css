@@ -296,7 +296,7 @@ footer img{
  width: 96%;
 }
 
-.form-container input:focus {
+.form-container input:focus, .update input:focus {
  outline: 1px solid #66CDAA;
  box-shadow: none;
 }
@@ -613,13 +613,52 @@ main{
 
 .card-body{
  display: grid;
- grid-template-columns: 40% 60%;
+ grid-template-columns: 50% 50%;
 }
 
 .flag{
  padding: 2%;
 }
 
+.hide{
+  display: none;
+}
+
+.update label{
+  display: block;
+  margin: 10px auto;
+}
+
+.update button{
+  background: #ffffff;
+  border-color: #2471A3;
+  margin: 2% 0 2% 0;
+  color: #2471A3;
+  width: 80px;
+  height: 35px;
+}
+
+.update .location{
+  display: block;
+  margin: 10px 0;
+  width: 90%;
+  height: 30px;
+  border: 1px solid #ccc;
+  border-width: 0 0 1px 0;
+  padding: 2%;
+}
+
+.update .comment{
+  display: block;
+  margin: 10px 0;
+  width: 90%;
+  height: 40px;
+  overflow: hidden;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+  border-width: 0 0 1px 0;
+  padding: 2%;
+}
 /*.flag img{
  width: 200px;
  height: 150px;

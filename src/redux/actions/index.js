@@ -13,6 +13,8 @@ export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const GET_RECORDS = 'GET_RECORDS';
 export const GET_RECORD = 'GET_RECORD';
 export const GET_USER_RECORDS = 'GET_USER_RECORDS';
+export const UPDATE_RECORD = 'UPDATE_RECORD';
+export const UPDATE_RECORD_ERROR = 'UPDATE_RECORD_ERROR';
 
 /**
  * @function signUp
@@ -58,7 +60,7 @@ export async function signIn(values) {
 }
 
 /**
- * @function signIn
+ * @function createRecord
  * @param {*} values
  * @returns {object} response
  */
@@ -76,6 +78,34 @@ export async function createRecord(values) {
   } catch (error) {
     return {
       type: CREATE_RECORD_ERROR,
+      payload: error.response.data,
+    };
+  }
+}
+
+/**
+ * @function createRecord
+ * @param {*} type
+ * @param {*} id
+ * @param {*} values
+ * @returns {object} response
+ */
+export async function updateRecord(type, id, { comment, location }) {
+  const recordType = type === 'intervention' ? 'interventions' : 'red-flags';
+  const token = localStorage.getItem('iReporterToken');
+
+  try {
+    const [updateComment, updateLocation] = await Promise.all([
+      axios.patch(`${BASE_URL}/${recordType}/${id}/comment`, { comment, location }, { headers: { 'x-access-token': token } }),
+      axios.patch(`${BASE_URL}/${recordType}/${id}/location`, { comment, location }, { headers: { 'x-access-token': token } })
+    ]);
+    return {
+      type: UPDATE_RECORD,
+      payload: { ...updateComment.data.data, ...updateLocation.data.data },
+    };
+  } catch (error) {
+    return {
+      type: UPDATE_RECORD_ERROR,
       payload: error.response.data,
     };
   }

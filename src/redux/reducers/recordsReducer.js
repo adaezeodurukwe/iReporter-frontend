@@ -5,6 +5,8 @@ import {
   CREATE_RECORD,
   CREATE_RECORD_ERROR,
   CLEAR_ERROR,
+  UPDATE_RECORD_ERROR,
+  UPDATE_RECORD,
 } from '../actions';
 
 const initialState = {
@@ -12,6 +14,7 @@ const initialState = {
   record: {},
   error: {},
   created: false,
+  updated: true,
 };
 
 /**
@@ -45,7 +48,18 @@ const recordReducer = (state = initialState, { type, payload }) => {
         record: payload,
         created: true,
       };
+    case UPDATE_RECORD:
+      return {
+        ...state,
+        updated: true,
+      };
     case CREATE_RECORD_ERROR:
+      return {
+        ...state,
+        error: payload,
+        updated: false,
+      };
+    case UPDATE_RECORD_ERROR:
       return {
         ...state,
         error: payload,
@@ -55,6 +69,7 @@ const recordReducer = (state = initialState, { type, payload }) => {
         ...state,
         error: {},
         created: false,
+        updated: false,
       };
     default:
       return state;
