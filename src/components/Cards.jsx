@@ -27,14 +27,36 @@ const Cards = ({
           <b>Comment: </b>
           {comment}
         </span>
+        <div className="cards-footer">
+          <Link to={`./details/${recType}/${id}`}>
+            <button type="button" className="view">View</button>
+          </Link>
+          <Link to={`./update/${recType}/${id}`}>
+            <button type="button" className="edit">Update</button>
+          </Link>
+          <button type="button" className="delete">Delete</button>
+        </div>
       </div>
-    </div>
-    <div className="cards-footer">
-      <Link to={`./details/${recType}/${id}`}>
-        <button type="button" className="view">View</button>
-      </Link>
-      <button type="button" className="edit">Update</button>
-      <button type="button" className="delete">Delete</button>
+      <div className="update">
+        <form>
+          <label>
+            Location
+            <input
+              type="text"
+              name="location"
+            />
+          </label>
+          <label>
+            Comment
+            <input
+              type="text"
+              name="comment"
+            />
+          </label>
+          <input />
+          <button type="submit">Update</button>
+        </form>
+      </div>
     </div>
   </div>
 );

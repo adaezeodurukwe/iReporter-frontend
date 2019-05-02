@@ -117,8 +117,9 @@ function mapDispatchToProps(dispatch) {
  * @param {*} state
  * @returns {object} state
  */
-function mapStateToProps({ records }) {
-  return records;
+function mapStateToProps({ recs }) {
+  const { record } = recs;
+  return { record };
 }
 
 Details.propTypes = {

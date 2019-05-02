@@ -22,8 +22,8 @@ import reducers from './redux/reducers';
 import Default from './components/DefaultLayout';
 import HomePage from './components/Home';
 import AdminPage from './components/Admin';
-// import CreatePage from './components/Create';
-import CreateRecordForm from './components/RecordForm';
+import CreatePage from './components/Create';
+// import CreateRecordForm from './components/RecordForm';
 import DetailsPage from './components/Details';
 import SigiInPage from './components/Signin';
 import SignUpPage from './components/Signup';
@@ -33,6 +33,7 @@ import FaqPage from './components/Faq';
 import history from './components/history';
 import RecordsPage from './components/Records';
 import Map from './components/MapContainer';
+import UserUpdate from './components/UpdateRecord';
 
 // Create Store
 const store = createStore(reducers, applyMiddleware(ReduxPromise));
@@ -47,16 +48,17 @@ const App = () => (
     <BrowserRouter>
       <Switch>
         <Route exact path="/admin" component={AdminPage} />
-        {/* <Route exact path="/create" component={CreateRecordForm} /> */}
-        <Route exact path="/update" component={UpdatePage} />
+        {/* <Route exact path="/update" component={UpdatePage} /> */}
         <Route exact path="/map" component={Map} />
         <Route path="/signup" render={() => <Default><SignUpPage /></Default>} />
-        <Route path="/create" render={() => <Default><CreateRecordForm history={history} formHeader="Create Record" /></Default>} />
+        <Route path="/create" render={() => <Default><CreatePage history={history} formHeader="Create Record" /></Default>} />
+        <Route path="/update/:type/:id" render={({ match }) => <Default><UpdatePage history={history} match={match} formHeader="Update Record" /></Default>} />
+        <Route path="/update/" render={({ match }) => <Default><UserUpdate history={history} match={match} formHeader="Update Record" /></Default>} />
         <Route path="/signin" render={() => <Default><SigiInPage history={history} /></Default>} />
         <Route path="/profile" render={() => <Default><ProfilePage /></Default>} />
         <Route path="/faq" render={() => <Default><FaqPage /></Default>} />
         <Route path="/records" render={() => <Default><RecordsPage history={history} /></Default>} />
-        <Route path="/details/:type/:id?" render={({ match }) => <Default><DetailsPage match={match} /></Default>} />
+        <Route path="/details/:type/:id" render={({ match }) => <Default><DetailsPage match={match} /></Default>} />
         <Route path="/details" render={({ match }) => <Default><DetailsPage match={match} /></Default>} />
         <Route exact path="/" render={() => <Default><HomePage history={history} /></Default>} />
       </Switch>
