@@ -7,7 +7,9 @@ import {
   CLEAR_ERROR,
   UPDATE_RECORD_ERROR,
   UPDATE_RECORD,
-  DELETE_RECORD
+  DELETE_RECORD,
+  UPDATE_STATUS,
+  UPDATE_STATUS_ERROR,
 } from '../actions';
 
 export const initialState = {
@@ -65,6 +67,18 @@ export const recordReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: payload,
+      };
+    case UPDATE_STATUS:
+      return {
+        ...state,
+        record: payload,
+        updated: true,
+      };
+    case UPDATE_STATUS_ERROR:
+      return {
+        ...state,
+        error: payload,
+        updated: false,
       };
     case CLEAR_ERROR:
       return {

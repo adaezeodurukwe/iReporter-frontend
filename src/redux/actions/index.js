@@ -17,6 +17,31 @@ export const UPDATE_RECORD = 'UPDATE_RECORD';
 export const UPDATE_RECORD_ERROR = 'UPDATE_RECORD_ERROR';
 export const DELETE_RECORD = 'DELETE_RECORD';
 export const DELETE_RECORD_ERROR = 'DELETE_RECORD_ERROR';
+export const GET_USER = 'GET USER';
+export const UPDATE_STATUS = 'UPDATE_STATUS';
+export const UPDATE_STATUS_ERROR = 'UPDATE_STATUS_ERROR';
+export const GET_USER_ERROR = 'GET_USER_ERROR';
+
+/**
+ * @function getUser
+ * @returns {object} response
+ */
+export async function getUser() {
+  const token = localStorage.getItem('iReporterToken');
+  try {
+    const request = await axios.get(`${BASE_URL}/auth/user`, { headers: { 'x-access-token': token } });
+    const { user } = request.data;
+    return {
+      type: GET_USER,
+      payload: user,
+    };
+  } catch (error) {
+    return {
+      type: GET_USER_ERROR,
+      payload: error.response.data,
+    };
+  }
+}
 
 /**
  * @function signUp
@@ -111,7 +136,7 @@ export async function deleteRecord(type, id) {
 }
 
 /**
- * @function createRecord
+ * @function updateRecord
  * @param {*} type
  * @param {*} id
  * @param {*} values
@@ -133,6 +158,32 @@ export async function updateRecord(type, id, { comment, location }) {
   } catch (error) {
     return {
       type: UPDATE_RECORD_ERROR,
+      payload: error.response.data,
+    };
+  }
+}
+
+/**
+ * @function updateStatus
+ * @param {*} type
+ * @param {*} id
+ * @param {*} values
+ * @returns {object} response
+ */
+export async function updateStatus(type, id, { status }) {
+  const recordType = type === 'intervention' ? 'interventions' : 'red-flags';
+  const token = localStorage.getItem('iReporterToken');
+
+  try {
+    const request = await axios.patch(`${BASE_URL}/${recordType}/${id}/status`, { status }, { headers: { 'x-access-token': token } });
+
+    return {
+      type: UPDATE_STATUS,
+      payload: request.data.data,
+    };
+  } catch (error) {
+    return {
+      type: UPDATE_STATUS_ERROR,
       payload: error.response.data,
     };
   }

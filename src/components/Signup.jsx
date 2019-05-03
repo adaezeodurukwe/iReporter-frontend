@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { func, bool, object as objectProp } from 'prop-types';
 import _ from 'underscore';
 
@@ -17,6 +18,15 @@ import Toast from './Toast';
  * @returns {HTMLElement} sign-up forn
  */
 export class SignUp extends Component {
+  /**
+   * @returns {undefined}
+   */
+  componentDidMount() {
+    const { clearError } = this.props;
+    clearError();
+  }
+
+
   clearAuthError = () => {
     const { clearError } = this.props;
     clearError();
@@ -191,6 +201,4 @@ SignUp.propTypes = {
 export default reduxForm({
   validate,
   form: 'signUpForm',
-})(
-  connect(mapStateToProps, mapDispatchToProps)(SignUp),
-);
+})(withRouter(connect(mapStateToProps, mapDispatchToProps)(SignUp)));

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import {
   func,
   string,
@@ -104,4 +104,4 @@ Home.propTypes = {
   }).isRequired,
 };
 
-export default Home;
+export default (withRouter(Home));
