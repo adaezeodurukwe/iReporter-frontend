@@ -10,12 +10,12 @@ import {
   DELETE_RECORD
 } from '../actions';
 
-const initialState = {
+export const initialState = {
   records: [],
   record: {},
   error: {},
   created: false,
-  updated: true,
+  updated: false,
   deleted: false
 };
 
@@ -25,7 +25,7 @@ const initialState = {
  * @param {*} action
  * @returns {object} state
  */
-const recordReducer = (state = initialState, { type, payload }) => {
+export const recordReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case GET_RECORDS:
       return {

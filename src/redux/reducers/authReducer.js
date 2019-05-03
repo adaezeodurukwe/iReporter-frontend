@@ -6,7 +6,7 @@ import {
   LOGIN_ERROR,
 } from '../actions';
 
-const initialState = {
+export const initialState = {
   signedUp: false,
   loggedIn: false,
   error: {},
@@ -18,7 +18,7 @@ const initialState = {
  * @param {*} action
  * @returns {object} state
  */
-const authReducer = (state = initialState, { type, payload }) => {
+export const authReducer = (state = initialState, { type, payload }) => {
   switch (type) {
     case SIGN_UP:
       return {

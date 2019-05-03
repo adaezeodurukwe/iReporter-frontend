@@ -9,8 +9,8 @@
     "start:dev": "webpack-dev-server --mode development --config webpack.config.js --env=production --open",
     "serve": " npm run build && npm run start",
     "heroku-postbuild": "rm -rf dist && NPM_CONFIG_PRODUCTION=false npm run build",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+    "test": "jest ./src/__tests__ --coverage --no-cache -u --forceExit"
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adaezeodurukwe/iReporter-frontend.git"
@@ -64,5 +64,10 @@
     "webpack-cli": "^3.2.3",
     "webpack-dev-server": "^3.2.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "babel-jest": "^24.7.1",
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "jest": "^24.7.1"
+  }
 }
