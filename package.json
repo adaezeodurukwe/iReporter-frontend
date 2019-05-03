@@ -10,7 +10,7 @@
     "serve": " npm run build && npm run start",
     "heroku-postbuild": "rm -rf dist && NPM_CONFIG_PRODUCTION=false npm run build",
     "test": "jest ./src/__tests__ --coverage --no-cache -u --forceExit"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/adaezeodurukwe/iReporter-frontend.git"
@@ -35,6 +35,7 @@
     "babel-polyfill": "^6.26.0",
     "core-js": "^3.0.1",
     "css-loader": "^2.1.1",
+    "dotenv": "^8.0.0",
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-loader": "^2.1.2",

@@ -10,6 +10,10 @@ module.exports = env => ({
   resolve: {
     extensions: ['.js', '.jsx', '.json', '.css'],
   },
+  node: {
+    net: 'empty',
+    fs: 'empty'
+  },
   module: {
     rules: [
       {
