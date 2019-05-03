@@ -638,6 +638,10 @@ main{
   height: 35px;
 }
 
+.update li{
+  list-style: none;
+}
+
 .update .location{
   display: block;
   margin: 10px 0;

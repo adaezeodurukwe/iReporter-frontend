@@ -28,7 +28,6 @@ import ProfilePage from './components/Profile';
 import FaqPage from './components/Faq';
 import history from './components/history';
 import RecordsPage from './components/Records';
-import Map from './components/MapContainer';
 
 // Create Store
 const store = createStore(reducers, applyMiddleware(ReduxPromise));
@@ -42,12 +41,11 @@ const App = () => (
   <Provider store={store}>
     <BrowserRouter>
       <Switch>
-        <Route exact path="/admin" component={AdminPage} />
-        <Route exact path="/map" component={Map} />
-        <Route path="/signup" render={() => <Default><SignUpPage /></Default>} />
+        <Route path="/signup" render={() => <Default><SignUpPage history={history} /></Default>} />
         <Route path="/create" render={() => <Default><CreatePage history={history} formHeader="Create Record" /></Default>} />
         <Route path="/signin" render={() => <Default><SigiInPage history={history} /></Default>} />
-        <Route path="/profile" render={() => <Default><ProfilePage /></Default>} />
+        <Route path="/profile" render={() => <Default><ProfilePage history={history} /></Default>} />
+        <Route path="/admin" render={() => <Default><AdminPage history={history} /></Default>} />
         <Route path="/faq" render={() => <Default><FaqPage /></Default>} />
         <Route path="/records" render={() => <Default><RecordsPage history={history} /></Default>} />
         <Route path="/details/:type/:id" render={({ match }) => <Default><DetailsPage match={match} /></Default>} />

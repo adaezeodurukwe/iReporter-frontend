@@ -4,11 +4,14 @@ import {
   CLEAR_ERROR,
   LOGIN,
   LOGIN_ERROR,
+  GET_USER,
+  GET_USER_ERROR,
 } from '../actions';
 
 export const initialState = {
   signedUp: false,
   loggedIn: false,
+  user: {},
   error: {},
 };
 
@@ -24,6 +27,7 @@ export const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         signedUp: true,
+        loggedIn: false
       };
     case SIGN_UP_ERROR:
       return {
@@ -44,6 +48,16 @@ export const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         loggedIn: true,
+      };
+    case GET_USER:
+      return {
+        ...state,
+        user: payload,
+      };
+    case GET_USER_ERROR:
+      return {
+        ...state,
+        error: payload,
       };
     default:
       return state;

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { array as arrayProp, func, object as objectProp } from 'prop-types';
 import _ from 'underscore';
 
@@ -112,4 +112,4 @@ Records.propTypes = {
   history: objectProp.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Records);
+export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(Records)));

@@ -23,6 +23,14 @@ import Toast from './Toast';
  * @returns {HTMLElement} sign-in form
  */
 class SignIn extends Component {
+  /**
+   * @returns {undefined}
+   */
+  componentDidMount() {
+    const { clearError } = this.props;
+    clearError();
+  }
+
   clearAuthError = () => {
     const { clearError } = this.props;
     clearError();
@@ -81,7 +89,7 @@ class SignIn extends Component {
     const message = _.isEmpty(error) ? '' : error.message;
     return (
       <form className="form-container" onSubmit={handleSubmit(this.onSubmit)}>
-        <h1><i>Sign Up</i></h1>
+        <h1><i>Sign In</i></h1>
         <div className="form-body">
           <Field
             label="Email"
@@ -96,7 +104,7 @@ class SignIn extends Component {
           />
         </div>
         <div className="button">
-          <button type="submit">Sign Up</button>
+          <button type="submit">Sign In</button>
         </div>
         <Toast
           message={message}

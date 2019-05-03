@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import {
   func,
   array as arrayProp,
-  object as objecrProb,
+  object as objectProp,
   bool,
 } from 'prop-types';
 import _ from 'underscore';
@@ -15,7 +15,8 @@ import {
   getUserRecord,
   clear,
   updateRecord,
-  deleteRecord
+  deleteRecord,
+  getUser,
 } from '../redux/actions';
 
 // import Component
@@ -24,7 +25,7 @@ import Toast from './Toast';
 import Min from './MinNav';
 
 /**
- * @function Profile
+ * @class Profile
  * @param {array} records
  * @returns {HTMLElement} Profile page
  */
@@ -35,13 +36,15 @@ class Profile extends Component {
     location: '',
     comment: '',
     show: false,
+    action: 'Update'
   }
 
   /**
    * @returns {object} articles
    */
   componentDidMount() {
-    const { getRecords, clearErrors } = this.props;
+    const { getRecords, clearErrors, getOneUser } = this.props;
+    getOneUser();
     clearErrors();
     getRecords();
   }
@@ -54,12 +57,14 @@ class Profile extends Component {
    * @returns {object} state
    */
   getType = (comment, location, type, id) => {
-    const { show } = this.state;
+    const { show, action } = this.state;
+    const newAction = action === 'Update' ? 'Cancel' : 'Update';
     this.setState({
       type,
       id,
       comment,
       location,
+      action: newAction,
       show: !show
     });
   }
@@ -87,7 +92,13 @@ class Profile extends Component {
     } else {
       content = records.map((record, index) => {
         const recordType = record.type.replace(/ /g, '');
-        const { show, id } = this.state;
+        const {
+          show,
+          id,
+          location,
+          comment,
+          action,
+        } = this.state;
         const newclass = show === true && id === record.id ? 'show' : 'hide';
         return (
           <div key={index.toString()} className="pmax-cards">
@@ -112,7 +123,7 @@ class Profile extends Component {
                   <Link to={`./details/${recordType}/${record.id}`}>
                     <button type="button" className="view">View</button>
                   </Link>
-                  <button type="button" onClick={() => { this.getType(record.comment, record.location, recordType, record.id); }} className="edit">Update</button>
+                  <button type="button" onClick={() => { this.getType(record.comment, record.location, recordType, record.id); }} className="edit">{action}</button>
                   <button type="button" onClick={() => { this.delete(recordType, record.id); }} className="delete">Delete</button>
                 </div>
               </div>
@@ -123,6 +134,7 @@ class Profile extends Component {
                     <input
                       type="text"
                       name="location"
+                      value={location}
                       className="location"
                       onChange={this.handleInputChange}
                     />
@@ -132,6 +144,7 @@ class Profile extends Component {
                     <input
                       type="text"
                       name="comment"
+                      value={comment}
                       className="comment"
                       onChange={this.handleInputChange}
                     />
@@ -161,10 +174,15 @@ class Profile extends Component {
 
   reload = () => {
     const { getRecords, clearErrors } = this.props;
+    this.setState({ show: false });
     getRecords();
     clearErrors();
   }
 
+  redirect = () => {
+    const { history } = this.props;
+    history.push('/signin');
+  }
 
   /**
    * @param {Event} e
@@ -182,10 +200,13 @@ class Profile extends Component {
    */
   render() {
     const {
-      records, updated, error, deleted
+      records, updated, error, deleted, user, autherror
     } = this.props;
 
-    if (updated || deleted) this.reload();
+    if ((_.isEmpty(user) && autherror.message)) this.redirect();
+
+    if (updated) this.reload();
+    if (deleted) this.reload();
 
     let draft = 0;
     let investigation = 0;
@@ -239,6 +260,7 @@ function mapDispatchToProps(dispatch) {
     clearErrors: clear,
     updateOne: updateRecord,
     deleteOne: deleteRecord,
+    getOneUser: getUser,
   }, dispatch));
 }
 
@@ -247,30 +269,39 @@ function mapDispatchToProps(dispatch) {
  * @param {*} state
  * @returns {object} state
  */
-function mapStateToProps({ recs }) {
+function mapStateToProps({ recs, auth }) {
   const {
     records,
     updated,
     error,
     deleted
   } = recs;
+  const { user } = auth;
+  const autherror = auth.error;
+
   return {
     records,
     updated,
     error,
-    deleted
+    deleted,
+    user,
+    autherror,
   };
 }
 
 Profile.propTypes = {
+  autherror: objectProp.isRequired,
   updateOne: func.isRequired,
+  user: objectProp.isRequired,
+  getOneUser: func.isRequired,
   deleteOne: func.isRequired,
   getRecords: func.isRequired,
   records: arrayProp.isRequired,
   updated: bool.isRequired,
+  history: objectProp.isRequired,
   deleted: bool.isRequired,
-  error: objecrProb.isRequired,
+  error: objectProp.isRequired,
   clearErrors: func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Profile);
+export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile)));
