@@ -865,8 +865,8 @@ main{
    padding-bottom: 1%;
  }
 
- [class*="mobile-nav"]{
-   display: none;
+ [class="mobile-nav"]{
+   display: block;
    position: absolute;
  }
 

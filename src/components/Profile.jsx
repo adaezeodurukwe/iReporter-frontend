@@ -47,13 +47,21 @@ class Profile extends Component {
   }
 
   /**
+   * @param {string} comment
+   * @param {string} location
    * @param {string} type
    * @param {string} id
    * @returns {object} state
    */
-  getType = (type, id) => {
+  getType = (comment, location, type, id) => {
     const { show } = this.state;
-    this.setState({ type, id, show: !show });
+    this.setState({
+      type,
+      id,
+      comment,
+      location,
+      show: !show
+    });
   }
 
   /**
@@ -104,7 +112,7 @@ class Profile extends Component {
                   <Link to={`./details/${recordType}/${record.id}`}>
                     <button type="button" className="view">View</button>
                   </Link>
-                  <button type="button" onClick={() => { this.getType(recordType, record.id); }} className="edit">Update</button>
+                  <button type="button" onClick={() => { this.getType(record.comment, record.location, recordType, record.id); }} className="edit">Update</button>
                   <button type="button" onClick={() => { this.delete(recordType, record.id); }} className="delete">Delete</button>
                 </div>
               </div>

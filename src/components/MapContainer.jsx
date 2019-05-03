@@ -9,7 +9,10 @@ import {
   Marker,
 } from 'google-maps-react';
 import PropTypes from 'prop-types';
+import dotenv from 'dotenv';
 import main from '../assets/css/main.css';
+
+dotenv.config();
 
 const mapStyles = {
   width: '100%',
@@ -104,5 +107,5 @@ MapContainer.defaultProps = {
 };
 
 export default GoogleApiWrapper({
-  apiKey: 'AIzaSyCjW4nSpjzeITCEi-_p-8zth1A9RmCyPwE',
+  apiKey: process.env.GOOGLE_API_KEY,
 })(MapContainer);
