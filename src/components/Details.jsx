@@ -10,7 +10,6 @@ import {
   string,
   bool,
 } from 'prop-types';
-// import _ from 'underscore';
 
 
 // Import map
@@ -29,6 +28,7 @@ class Details extends Component {
     comment: 'No comment',
     type: 'No Type',
     status: 'None',
+    id: '',
   }
 
   /**
@@ -38,6 +38,7 @@ class Details extends Component {
     const { getSpecificRecord, match } = this.props;
     const { id, type } = match.params;
     const recordType = type === 'redflag' ? 'red-flags' : 'interventions';
+    this.setState({ id, type });
     getSpecificRecord(recordType, id);
   }
 

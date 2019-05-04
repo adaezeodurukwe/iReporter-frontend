@@ -1,12 +1,6 @@
+/* eslint-disable react/no-unused-prop-types */
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
-import {
-  func,
-  string,
-  number,
-  object,
-  shape,
-} from 'prop-types';
 
 
 // Import images
@@ -22,7 +16,7 @@ import scrutiny from '../assets/img/scrutiny.png';
  * @param {*} state
  * @returns {HTMLElement} home page
  */
-const Home = ({ history }) => (
+const Home = () => (
   <div className="container">
     <div className="header">
       <div className="header-img">
@@ -35,8 +29,12 @@ const Home = ({ history }) => (
         <p>Curb corruption,</p>
         <p>Get attention to what neeeds fixing.</p>
         <div className="header-button">
-          <button type="button" onClick={() => history.push('./signup')}>Sign Up</button>
-          <button type="button" onClick={() => history.push('./signin')}>Log in</button>
+          <Link to="/signup">
+            <button type="button">Sign Up</button>
+          </Link>
+          <Link to="/signin">
+            <button type="button">Log in</button>
+          </Link>
         </div>
       </div>
     </div>
@@ -88,20 +86,5 @@ const Home = ({ history }) => (
   </div>
 );
 
-Home.propTypes = {
-  history: shape({
-    action: string,
-    block: func,
-    createHref: func,
-    go: func,
-    goBack: func,
-    goForward: func,
-    length: number,
-    listen: func,
-    location: object,
-    push: func,
-    replace: func,
-  }).isRequired,
-};
 
 export default (withRouter(Home));

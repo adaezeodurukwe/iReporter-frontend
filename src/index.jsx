@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {
-  BrowserRouter,
+  HashRouter,
   Switch,
   Route,
 } from 'react-router-dom';
@@ -39,7 +39,7 @@ const store = createStore(reducers, applyMiddleware(ReduxPromise));
  */
 const App = () => (
   <Provider store={store}>
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route path="/signup" render={() => <Default><SignUpPage history={history} /></Default>} />
         <Route path="/create" render={() => <Default><CreatePage history={history} formHeader="Create Record" /></Default>} />
@@ -52,7 +52,7 @@ const App = () => (
         <Route path="/details" render={({ match }) => <Default><DetailsPage match={match} /></Default>} />
         <Route exact path="/" render={() => <Default><HomePage history={history} /></Default>} />
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   </Provider>
 );
 
