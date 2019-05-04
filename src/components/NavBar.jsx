@@ -1,7 +1,3 @@
-/* eslint-disable require-jsdoc */
-/* eslint-disable valid-jsdoc */
-/* eslint-disable arrow-body-style */
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import menu1 from '../assets/img/menu1.png';
@@ -27,7 +23,9 @@ class NavBar extends Component {
     this.setState({ show: !show });
   };
 
-  // const show = showNav();
+  /**
+   * @returns {htmlElement} navbar
+   */
   render() {
     const { show } = this.state;
 
