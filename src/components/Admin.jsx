@@ -91,6 +91,7 @@ export class Admin extends Component {
     } else {
       content = records.map((record, index) => {
         const recordType = record.type.replace(/ /g, '');
+        const fullname = `${record.firstname} ${' '} ${record.lastname}`;
         const {
           show, id, status, action
         } = this.state;
@@ -101,6 +102,12 @@ export class Admin extends Component {
               <div className="flag">
                 <span>
                   <h4>{record.type}</h4>
+                </span>
+                <span>
+                  <b>Reporter: </b>
+                  <i className="fullname">
+                    {fullname}
+                  </i>
                 </span>
                 <span>
                   <b>Status: </b>
