@@ -9,9 +9,6 @@ const MinNav = () => (
   <div className="min-nav">
     <ul>
       <li>
-        <Link to="/signin">Logout</Link>
-      </li>
-      <li>
         <Link to="/create">Add</Link>
       </li>
       <li>
