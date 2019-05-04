@@ -36,7 +36,7 @@ class NavBar extends Component {
         <nav>
           <div className="inner">
             <div className="mobile">
-              <button type="button" onClick={() => { this.showNav(); }}><img src={menu1} alt="mobilenav" /></button>
+              <button className="mobileNavButton" type="button" onClick={() => { this.showNav(); }}><img src={menu1} alt="mobilenav" /></button>
             </div>
             <Link to="/"><h2>iReporter</h2></Link>
             <div className="links">

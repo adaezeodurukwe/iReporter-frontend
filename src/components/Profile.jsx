@@ -29,7 +29,7 @@ import Min from './MinNav';
  * @param {array} records
  * @returns {HTMLElement} Profile page
  */
-class Profile extends Component {
+export class Profile extends Component {
   state = {
     type: '',
     id: '',
@@ -77,6 +77,11 @@ class Profile extends Component {
   delete = (type, id) => {
     const { deleteOne } = this.props;
     deleteOne(type, id);
+  }
+
+  hideForm = () => {
+    const { show } = this.state;
+    if (show) this.setState({ show: false, action: 'Update' });
   }
 
   displayRecords = () => {
@@ -174,7 +179,7 @@ class Profile extends Component {
 
   reload = () => {
     const { getRecords, clearErrors } = this.props;
-    this.setState({ show: false });
+    this.hideForm();
     getRecords();
     clearErrors();
   }

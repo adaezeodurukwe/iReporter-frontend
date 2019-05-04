@@ -28,7 +28,7 @@ import Toast from './Toast';
  * @param {array} records
  * @returns {HTMLElement} Profile page
  */
-class Admin extends Component {
+export class Admin extends Component {
   state = {
     type: '',
     id: '',
@@ -73,6 +73,11 @@ class Admin extends Component {
     });
   }
 
+  hideForm = () => {
+    const { show } = this.state;
+    if (show) this.setState({ show: false, action: 'Update' });
+  }
+
   displayRecords = () => {
     const { records } = this.props;
     let content = '';
@@ -86,7 +91,9 @@ class Admin extends Component {
     } else {
       content = records.map((record, index) => {
         const recordType = record.type.replace(/ /g, '');
-        const { show, id, status } = this.state;
+        const {
+          show, id, status, action
+        } = this.state;
         const newclass = show === true && id === record.id ? 'show' : 'hide';
         return (
           <div key={index.toString()} className="pmax-cards">
@@ -111,7 +118,7 @@ class Admin extends Component {
                   <Link to={`./details/${recordType}/${record.id}`}>
                     <button type="button" className="view">View</button>
                   </Link>
-                  <button type="button" onClick={() => { this.getType(record.status, recordType, record.id); }} className="edit">Update</button>
+                  <button type="button" onClick={() => { this.getType(record.status, recordType, record.id); }} className="edit">{action}</button>
                 </div>
               </div>
               <div className={`update ${newclass}`}>
@@ -182,8 +189,8 @@ class Admin extends Component {
    * @returns {object} state
    */
   handleInputChange = (e) => {
-    // const { clearErrors } = this.props;
-    // clearErrors();
+    const { clearErrors } = this.props;
+    clearErrors();
     this.setState({
       status: e.target.value
     });
@@ -191,12 +198,9 @@ class Admin extends Component {
 
   reload = () => {
     const { getAllRecords, clearErrors } = this.props;
-    this.setState({
-      status: '',
-      show: false
-    });
-    getAllRecords();
     clearErrors();
+    getAllRecords();
+    this.hideForm();
   }
 
   redirect = () => {

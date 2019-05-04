@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React from 'react';
 import { mount } from 'enzyme';
 import { Provider } from 'react-redux';
@@ -11,39 +10,25 @@ import reducers from '../redux/reducers';
 import Default from '../components/DefaultLayout';
 import SignUpPage from '../components/Signup';
 import HomePage from '../components/Home';
-import AdminPage from '../components/Admin';
+import AdminPage, { Admin } from '../components/Admin';
 import CreatePage from '../components/Create';
 import DetailsPage from '../components/Details';
 import SignInPage from '../components/Signin';
-import ProfilePage from '../components/Profile';
+import ProfilePage, { Profile } from '../components/Profile';
 import FaqPage from '../components/Faq';
-import RecordsPage from '../components/Records';
+import RecordsPage, { Records } from '../components/Records';
+
+// Mock data
+import {
+  responsedata, history, match, user
+} from '../__mocks__/response';
 
 const store = createStore(reducers, applyMiddleware(ReduxPromise));
 const mockFunction = jest.fn();
-const history = {
-  action: 'PUSH',
-  block: mockFunction,
-  createHref: mockFunction,
-  go: mockFunction,
-  goBack: mockFunction,
-  goForward: mockFunction,
-  length: 1,
-  listen: mockFunction,
-  location: {},
-  push: mockFunction,
-  replace: mockFunction
-};
 
-const match = {
-  isExact: true,
-  params: {},
-  path: '/explore',
-  url: '/explore'
-};
 
-describe('Profile page', () => {
-  it('Should mount without failing', () => {
+describe('Faq page', () => {
+  it('Should mount faq page without failing', () => {
     const FaqView = mount(
       <BrowserRouter>
         <Provider store={store}>
@@ -53,6 +38,9 @@ describe('Profile page', () => {
         </Provider>
       </BrowserRouter>
     );
+
+    const mobileButton = FaqView.find('.mobileNavButton');
+    mobileButton.simulate('click');
     expect(FaqView.find('.faq').exists()).toEqual(true);
   });
 });
@@ -185,6 +173,121 @@ describe('Profile page', () => {
   });
 });
 
+describe('Profile class', () => {
+  it('Profile page should mount admin with articles', () => {
+    const ProfileClass = mount(
+      <BrowserRouter>
+        <Profile
+          deleteOne={mockFunction}
+          updateOne={mockFunction}
+          getRecords={mockFunction}
+          records={responsedata}
+          updated={false}
+          deleted={false}
+          history={history}
+          error={{}}
+          clearErrors={mockFunction}
+          autherror={{}}
+          user={user}
+          getOneUser={mockFunction}
+        />
+      </BrowserRouter>
+    );
+    expect(ProfileClass.find('DashboardStatus').exists()).toEqual(true);
+  });
+  it('Profile Page should reload page on update', () => {
+    const ProfileClass = mount(
+      <BrowserRouter>
+        <Profile
+          deleteOne={mockFunction}
+          updateOne={mockFunction}
+          getRecords={mockFunction}
+          records={responsedata}
+          updated
+          deleted={false}
+          history={history}
+          error={{}}
+          clearErrors={mockFunction}
+          autherror={{}}
+          user={user}
+          getOneUser={mockFunction}
+        />
+      </BrowserRouter>
+    );
+    expect(ProfileClass.find('DashboardStatus').exists()).toEqual(true);
+  });
+});
+
+
+describe('Admin class', () => {
+  it('Admin should mount admin with articles', () => {
+    const AdminClass = mount(
+      <BrowserRouter>
+        <Admin
+          updateOne={mockFunction}
+          getRecords={mockFunction}
+          records={responsedata}
+          updated={false}
+          history={history}
+          error={{}}
+          clearErrors={mockFunction}
+          autherror={{}}
+          user={user}
+          getOneUser={mockFunction}
+          getAllRecords={mockFunction}
+        />
+      </BrowserRouter>
+    );
+    expect(AdminClass.find('DashboardStatus').exists()).toEqual(true);
+  });
+  it('Admin should reload page on update', () => {
+    const AdminClass = mount(
+      <BrowserRouter>
+        <Admin
+          updateOne={mockFunction}
+          getRecords={mockFunction}
+          records={responsedata}
+          updated
+          history={history}
+          error={{}}
+          clearErrors={mockFunction}
+          autherror={{}}
+          user={user}
+          getOneUser={mockFunction}
+          getAllRecords={mockFunction}
+        />
+      </BrowserRouter>
+    );
+    expect(AdminClass.find('DashboardStatus').exists()).toEqual(true);
+  });
+});
+
+describe('Admin page', () => {
+  it('Admin should mount without failing', () => {
+    const AdminView = mount(
+      <BrowserRouter>
+        <Provider store={store}>
+          <Default>
+            <AdminPage
+              updateOne={mockFunction}
+              getRecords={mockFunction}
+              records={[]}
+              updated={false}
+              error={{}}
+              clearErrors={mockFunction}
+              autherror={{}}
+              user={user}
+              getOneUser={mockFunction}
+              getAllRecords={mockFunction}
+            />
+          </Default>
+        </Provider>
+      </BrowserRouter>
+    );
+    expect(AdminView.find('DashboardStatus').exists()).toEqual(true);
+  });
+});
+
 describe('Records page', () => {
   it('Should mount without failing', () => {
     const RecordsView = mount(
@@ -201,5 +304,20 @@ describe('Records page', () => {
       </BrowserRouter>
     );
     expect(RecordsView.find('.records').exists()).toEqual(true);
+  });
+});
+
+describe('Records class', () => {
+  it('Records page should mount admin with articles', () => {
+    const RecordsClass = mount(
+      <BrowserRouter>
+        <Records
+          records={responsedata}
+          getAllRecords={mockFunction}
+          history={{}}
+        />
+      </BrowserRouter>
+    );
+    expect(RecordsClass.find('.records').exists()).toEqual(true);
   });
 });

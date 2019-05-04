@@ -18,7 +18,7 @@ import report from '../assets/img/report.png';
  * @class Records
  * @returns {HTMLElement} records
  */
-class Records extends Component {
+export class Records extends Component {
   /**
    * @method componentDidMount
    * @returns {object} Records
