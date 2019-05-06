@@ -39,11 +39,11 @@ nav{
  font-size: 25px;
 }
 
-.mobile-nav a{
+.mobile-nav a, .mobile-nav span{
  text-decoration: none;
  color: #02309B;
  padding: 1%;
-
+ cursor: pointer;
 }
 
 nav h2{
@@ -65,13 +65,14 @@ nav ul li{
  padding-left: 5%;
 }
 
-nav ul li a{
- text-decoration: none;
- color: #02309B;
- padding-bottom: 5px;
- font-style: oblique;
+nav ul li a, nav ul li span{
+  text-decoration: none;
+  color: #02309B;
+  padding-bottom: 5px;
+  font-style: oblique;
   font-size: 20px;
   font-weight: 600;
+  cursor: pointer;
 }
 
 nav ul li a.active{
