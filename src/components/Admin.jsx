@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import moment from 'moment';
 import {
   func,
   array as arrayProp,
@@ -107,6 +108,12 @@ export class Admin extends Component {
                   <i className="fullname">
                     {fullname}
                   </i>
+                </span>
+                <span>
+                  <b>CreatedOn: </b>
+                  {`${moment(record.createdon).format(
+                    'MMMM Do YYYY'
+                  )}`}
                 </span>
                 <span>
                   <b>Status: </b>

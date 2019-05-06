@@ -1,5 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
+const webpack = require('webpack');
+require('dotenv').config();
 
 module.exports = env => ({
   entry: './src/index.jsx',
@@ -53,6 +56,10 @@ module.exports = env => ({
       template: './src/index.html',
       filename: 'index.html',
     }),
+    new Dotenv(),
+    new webpack.DefinePlugin({
+      'process.env.GOOGLE_API_KEY': JSON.stringify(process.env.GOOGLE_API_KEY),
+    })
   ],
   devServer: {
     historyApiFallback: true,

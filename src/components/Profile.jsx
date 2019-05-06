@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
+import moment from 'moment';
 import {
   func,
   array as arrayProp,
@@ -112,6 +113,12 @@ export class Profile extends Component {
               <div className="flag">
                 <span>
                   <h4>{record.type}</h4>
+                </span>
+                <span>
+                  <b>CreatedOn: </b>
+                  {`${moment(record.createdon).format(
+                    'MMMM Do YYYY'
+                  )}`}
                 </span>
                 <span>
                   <b>Status: </b>

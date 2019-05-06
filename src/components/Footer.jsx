@@ -5,7 +5,7 @@ import React from 'react';
  * @returns {HTMLElement} footer
  */
 const Footer = () => (
-  <div>
+  <div className="foot">
     <footer>
       <p>&copy; Adaeze Odurukwe</p>
     </footer>
