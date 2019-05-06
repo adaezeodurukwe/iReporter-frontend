@@ -108,7 +108,7 @@ describe('Home page', () => {
 });
 
 describe('Create Record page', () => {
-  it('Should mount without failing', () => {
+  it('Should mount create without failing', () => {
     const CreateView = mount(
       <BrowserRouter>
         <Provider store={store}>
@@ -122,12 +122,13 @@ describe('Create Record page', () => {
               clearError={mockFunction}
               formHeader="Create Record"
               history={history}
+              loggedIn
             />
           </Default>
         </Provider>
       </BrowserRouter>
     );
-    expect(CreateView.find('.form-container').exists()).toEqual(true);
+    expect(CreateView.find('ReduxForm').exists()).toEqual(true);
   });
 });
 
