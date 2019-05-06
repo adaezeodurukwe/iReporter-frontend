@@ -13,7 +13,7 @@ import _ from 'underscore';
 
 
 // Import actions
-import { createRecord, clear } from '../redux/actions';
+import { createRecord, clear, getUser } from '../redux/actions';
 
 // Import components
 import Toast from './Toast';
@@ -23,6 +23,16 @@ import Toast from './Toast';
  * @returns {HTMLElement} sign-in form
  */
 class Create extends Component {
+  /**
+   * @returns {object} articles
+   */
+  componentDidMount() {
+    const {
+      getOneUser,
+    } = this.props;
+    getOneUser();
+  }
+
   clearAuthError = () => {
     const { clearError } = this.props;
     clearError();
@@ -77,6 +87,7 @@ class Create extends Component {
       created,
       error,
       formHeader,
+      loggedIn,
     } = this.props;
 
     if (created) this.redirect();
@@ -84,7 +95,7 @@ class Create extends Component {
     const addedClass = _.isEmpty(error) ? '' : 'show';
 
     const message = _.isEmpty(error) ? '' : error.message;
-    return (
+    return loggedIn ? (
       <form className="form-container" onSubmit={handleSubmit(this.onSubmit)}>
         <h1><i>{formHeader}</i></h1>
         <div className="create">
@@ -114,7 +125,7 @@ class Create extends Component {
           addedClass={addedClass}
         />
       </form>
-    );
+    ) : <div className="not_logged_in">Log in to create a report</div>;
   }
 }
 
@@ -141,6 +152,7 @@ function mapDispatchToProps(dispatch) {
   return (bindActionCreators({
     createNewRecord: createRecord,
     clearError: clear,
+    getOneUser: getUser,
   }, dispatch));
 }
 
@@ -149,15 +161,21 @@ function mapDispatchToProps(dispatch) {
  * @param {*} state
  * @returns {object} state
  */
-function mapStateToProps({ recs }) {
+function mapStateToProps({ recs, auth }) {
   const { created, error } = recs;
+  const { user, loggedIn } = auth;
   return {
     created,
     error,
+    user,
+    loggedIn
   };
 }
 
 Create.propTypes = {
+  loggedIn: bool.isRequired,
+  user: objectProp.isRequired,
+  getOneUser: func.isRequired,
   createNewRecord: func.isRequired,
   handleSubmit: func.isRequired,
   history: objectProp.isRequired,

@@ -116,6 +116,7 @@ describe('Create Record page', () => {
             <CreatePage
               createNewRecord={mockFunction}
               handleSubmit={mockFunction}
+              user={user}
               created={false}
               error={{}}
               clearError={mockFunction}

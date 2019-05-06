@@ -21,6 +21,8 @@ export const GET_USER = 'GET USER';
 export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const UPDATE_STATUS_ERROR = 'UPDATE_STATUS_ERROR';
 export const GET_USER_ERROR = 'GET_USER_ERROR';
+export const LOGOUT = 'LOGOUT';
+export const CLOSE = 'CLOSE';
 
 /**
  * @function getUser
@@ -196,6 +198,28 @@ export async function updateStatus(type, id, { status }) {
 export function clear() {
   return {
     type: CLEAR_ERROR,
+  };
+}
+
+/**
+ * @function close
+ * @returns {object} clear
+ */
+export function close() {
+  return {
+    type: CLOSE,
+  };
+}
+
+/**
+ * @function logout
+ * @returns {object} logout
+ */
+export async function logout() {
+  await localStorage.clear();
+  window.location.href = '/';
+  return {
+    type: LOGOUT,
   };
 }
 

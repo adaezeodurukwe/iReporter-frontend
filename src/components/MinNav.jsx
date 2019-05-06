@@ -1,15 +1,16 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { func } from 'prop-types';
 
 /**
  * @function Cards
  * @returns {HTMLElement} card
  */
-const MinNav = () => (
+const MinNav = ({ logout }) => (
   <div className="min-nav">
     <ul>
       <li>
-        <Link to="/signin">Logout</Link>
+        <span role="button" tabIndex={0} onKeyPress={() => { logout(); }} onClick={() => { logout(); }}>Logout</span>
       </li>
       <li>
         <Link to="/create">Add</Link>
@@ -20,6 +21,10 @@ const MinNav = () => (
     </ul>
   </div>
 );
+
+MinNav.propTypes = {
+  logout: func.isRequired,
+};
 
 
 export default MinNav;
