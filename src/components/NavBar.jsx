@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import {
   bool,
+  func,
 } from 'prop-types';
 import menu1 from '../assets/img/menu1.png';
+
+// Import Action
+import {
+  logout
+} from '../redux/actions';
 
 /**
  * @function NavBar
@@ -36,7 +43,7 @@ class NavBar extends Component {
    */
   render() {
     const { show } = this.state;
-    const { loggedIn } = this.props;
+    const { loggedIn, logoutUser } = this.props;
 
 
     return (
@@ -66,6 +73,13 @@ class NavBar extends Component {
                 {loggedIn
                   && (
                   <li>
+                    <span role="button" tabIndex={0} onKeyPress={() => { logoutUser(); }} onClick={() => { logoutUser(); }}>Logout</span>
+                  </li>
+                  )
+                 }
+                {loggedIn
+                  && (
+                  <li>
                     <Link to="/profile">Profile</Link>
                   </li>
                   )
@@ -90,6 +104,8 @@ class NavBar extends Component {
             <p><Link to="/create">Add Record</Link></p>
             {!loggedIn && (<p><Link to="/signin">Login</Link></p>)}
             {!loggedIn && (<p><Link to="/signup">Register</Link></p>)}
+            {loggedIn
+              && (<p><span role="button" tabIndex={0} onKeyPress={() => { logoutUser(); }} onClick={() => { logoutUser(); }}>Logout</span></p>)}
           </div>
           )
         }
@@ -111,8 +127,20 @@ function mapStateToProps({ auth }) {
   };
 }
 
+/**
+ * @function mapDispatchToProps
+ * @param {*} dispatch
+ * @returns {object} actions
+ */
+function mapDispatchToProps(dispatch) {
+  return (bindActionCreators({
+    logoutUser: logout,
+  }, dispatch));
+}
+
 NavBar.propTypes = {
   loggedIn: bool.isRequired,
+  logoutUser: func.isRequired,
 };
 
-export default connect(mapStateToProps)(NavBar);
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
