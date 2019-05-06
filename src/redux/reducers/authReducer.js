@@ -6,13 +6,16 @@ import {
   LOGIN_ERROR,
   GET_USER,
   GET_USER_ERROR,
+  LOGOUT,
+  CLOSE,
 } from '../actions';
 
 export const initialState = {
   signedUp: false,
-  loggedIn: false,
+  loggedIn: !!(localStorage.iReporterToken),
   user: {},
   error: {},
+  closeNav: false,
 };
 
 /**
@@ -27,7 +30,7 @@ export const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         signedUp: true,
-        loggedIn: false
+        loggedIn: true
       };
     case SIGN_UP_ERROR:
       return {
@@ -38,6 +41,12 @@ export const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: {},
+      };
+    case LOGOUT:
+      return {
+        ...state,
+        error: {},
+        loggedIn: false,
       };
     case LOGIN_ERROR:
       return {
@@ -58,6 +67,11 @@ export const authReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         error: payload,
+      };
+    case CLOSE:
+      return {
+        ...state,
+        closeNav: true,
       };
     default:
       return state;

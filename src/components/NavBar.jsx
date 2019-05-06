@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import {
+  bool,
+} from 'prop-types';
 import menu1 from '../assets/img/menu1.png';
 
-/**
- * @function mobileNav
- * @returns {HTMLElement} nav
- */
 /**
  * @function NavBar
  * @returns {HTMLElement} nav bar
@@ -13,6 +13,14 @@ import menu1 from '../assets/img/menu1.png';
 class NavBar extends Component {
   state = {
     show: false
+  }
+
+  /**
+   * @method componentDidMount
+   * @returns {undefined}
+   */
+  componentDidMount() {
+    this.setState({ show: false });
   }
 
   /**
@@ -28,6 +36,8 @@ class NavBar extends Component {
    */
   render() {
     const { show } = this.state;
+    const { loggedIn } = this.props;
+
 
     return (
       <div>
@@ -39,17 +49,29 @@ class NavBar extends Component {
             <Link to="/"><h2>iReporter</h2></Link>
             <div className="links">
               <ul>
-                <li>
-                  <Link to="/signin">Login</Link>
-                </li>
-                <li>
-                  <Link to="/signup">Register</Link>
-                </li>
+                {!loggedIn
+                  && (
+                  <li>
+                    <Link to="/signin">Login</Link>
+                  </li>
+                  )
+                }
+                {!loggedIn
+                  && (
+                  <li>
+                    <Link to="/signup">Register</Link>
+                  </li>
+                  )
+                }
+                {loggedIn
+                  && (
+                  <li>
+                    <Link to="/profile">Profile</Link>
+                  </li>
+                  )
+                 }
                 <li>
                   <Link to="/faq">Faq</Link>
-                </li>
-                <li>
-                  <Link to="/profile">Profile</Link>
                 </li>
                 <li>
                   <Link to="/records">Records</Link>
@@ -62,10 +84,12 @@ class NavBar extends Component {
           && (
           <div className="mobile-nav">
             <p><Link to="/records">Records</Link></p>
-            <p><Link to="/profile">Profile</Link></p>
+            {loggedIn
+              && (<p><Link to="/profile">Profile</Link></p>)}
             <p><Link to="/faq">Faq</Link></p>
             <p><Link to="/create">Add Record</Link></p>
-            <p><Link to="/logout">Logout</Link></p>
+            {!loggedIn && (<p><Link to="/signin">Login</Link></p>)}
+            {!loggedIn && (<p><Link to="/signup">Register</Link></p>)}
           </div>
           )
         }
@@ -74,4 +98,21 @@ class NavBar extends Component {
   }
 }
 
-export default NavBar;
+/**
+ * @function mapStateToProps
+ * @param {*} state
+ * @returns {object} state
+ */
+function mapStateToProps({ auth }) {
+  const { loggedIn, closeNav } = auth;
+  return {
+    loggedIn,
+    closeNav
+  };
+}
+
+NavBar.propTypes = {
+  loggedIn: bool.isRequired,
+};
+
+export default connect(mapStateToProps)(NavBar);

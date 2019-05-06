@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { Link, withRouter } from 'react-router-dom';
-import { array as arrayProp, func, object as objectProp } from 'prop-types';
+import {
+  array as arrayProp, func, object as objectProp, bool
+} from 'prop-types';
 import _ from 'underscore';
 
 // Import actions
@@ -70,14 +72,17 @@ export class Records extends Component {
    * @returns {HTMLElement} records
    */
   render() {
+    const { loggedIn } = this.props;
     return (
       <div className="records">
         <h2>RECORDS</h2>
         <div className="records-body">
           <div className="records-main" id="main">
-            <div className="cards">
-              <Link to="./create"><img src={add} alt="add" /></Link>
-            </div>
+            {loggedIn && (
+              <div className="first_cards">
+                <Link to="./create"><img src={add} alt="add" /></Link>
+              </div>
+            )}
             {this.displayRecords()}
           </div>
         </div>
@@ -101,15 +106,17 @@ function mapDispatchToProps(dispatch) {
  * @param {*} state
  * @returns {object} state
  */
-function mapStateToProps({ recs }) {
+function mapStateToProps({ recs, auth }) {
   const { records } = recs;
-  return { records };
+  const { loggedIn } = auth;
+  return { records, loggedIn };
 }
 
 Records.propTypes = {
   records: arrayProp.isRequired,
   getAllRecords: func.isRequired,
   history: objectProp.isRequired,
+  loggedIn: bool.isRequired,
 };
 
 export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(Records)));

@@ -17,6 +17,7 @@ import {
   updateRecord,
   deleteRecord,
   getUser,
+  logout
 } from '../redux/actions';
 
 // import Component
@@ -177,6 +178,7 @@ export class Profile extends Component {
     });
   };
 
+
   reload = () => {
     const { getRecords, clearErrors } = this.props;
     this.hideForm();
@@ -205,7 +207,7 @@ export class Profile extends Component {
    */
   render() {
     const {
-      records, updated, error, deleted, user, autherror
+      records, updated, error, deleted, user, autherror, logoutUser
     } = this.props;
 
     if ((_.isEmpty(user) && autherror.message)) this.redirect();
@@ -233,7 +235,9 @@ export class Profile extends Component {
       <div className="profile">
         <h2>PROFILE</h2>
         <main>
-          <Min />
+          <Min
+            logout={logoutUser}
+          />
           <h3>MY RECORDS</h3>
           <Dashboard
             draft={draft}
@@ -266,6 +270,7 @@ function mapDispatchToProps(dispatch) {
     updateOne: updateRecord,
     deleteOne: deleteRecord,
     getOneUser: getUser,
+    logoutUser: logout,
   }, dispatch));
 }
 
@@ -295,6 +300,7 @@ function mapStateToProps({ recs, auth }) {
 }
 
 Profile.propTypes = {
+  logoutUser: func.isRequired,
   autherror: objectProp.isRequired,
   updateOne: func.isRequired,
   user: objectProp.isRequired,
