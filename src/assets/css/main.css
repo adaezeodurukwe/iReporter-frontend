@@ -537,7 +537,6 @@ main{
  padding: 2%;
 }
 
-
 .profile-header b{
  width: 40%;
  float: left;
@@ -635,6 +634,11 @@ main{
   width: 80px;
   height: 35px;
 }
+
+.fullname{
+  text-transform: capitalize;
+}
+
 
 .update li{
   list-style: none;
