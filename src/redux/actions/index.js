@@ -23,6 +23,8 @@ export const UPDATE_STATUS_ERROR = 'UPDATE_STATUS_ERROR';
 export const GET_USER_ERROR = 'GET_USER_ERROR';
 export const LOGOUT = 'LOGOUT';
 export const CLOSE = 'CLOSE';
+export const OPEN_NAV = 'OPEN_NAV';
+export const CLOSE_NAV = 'CLOSE_NAV';
 
 /**
  * @function getUser
@@ -220,6 +222,28 @@ export async function logout() {
   window.location.href = '/';
   return {
     type: LOGOUT,
+  };
+}
+
+/**
+ * @function openNav
+ * @returns {object} open nav
+ */
+export function openNav() {
+  return {
+    type: OPEN_NAV,
+    payload: true
+  };
+}
+
+/**
+ * @function closeNav
+ * @returns {object} close nav
+ */
+export function closeNav() {
+  return {
+    type: CLOSE_NAV,
+    payload: false
   };
 }
 

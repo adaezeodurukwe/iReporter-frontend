@@ -6,11 +6,13 @@ import {
   bool,
   func,
 } from 'prop-types';
-import menu1 from '../assets/img/menu1.png';
+import classNames from 'classnames';
 
 // Import Action
 import {
-  logout
+  logout,
+  closeNav,
+  openNav
 } from '../redux/actions';
 
 /**
@@ -18,40 +20,41 @@ import {
  * @returns {HTMLElement} nav bar
  */
 class NavBar extends Component {
-  state = {
-    show: false
-  }
-
-  /**
-   * @method componentDidMount
-   * @returns {undefined}
-   */
-  componentDidMount() {
-    this.setState({ show: false });
-  }
-
   /**
    * @returns {htmlElement} nav
    */
-  showNav = () => {
-    const { show } = this.state;
-    this.setState({ show: !show });
-  };
+  toggleNav() {
+    const { showNav, open, close } = this.props;
+    if (showNav === false) {
+      return open();
+    }
+    return close();
+  }
 
   /**
    * @returns {htmlElement} navbar
    */
   render() {
-    const { show } = this.state;
-    const { loggedIn, logoutUser } = this.props;
-
+    const { loggedIn, logoutUser, showNav } = this.props;
+    const menuStyle = classNames({
+      burger: true,
+      open: showNav
+    });
 
     return (
       <div>
         <nav>
           <div className="inner">
             <div className="mobile">
-              <button className="mobileNavButton" type="button" onClick={() => { this.showNav(); }}><img src={menu1} alt="mobilenav" /></button>
+              <div
+                className="mobileNavButton"
+                role="button"
+                tabIndex={0}
+                onClick={() => this.toggleNav()}
+                onKeyPress={() => this.toggleNav()}
+              >
+                <span className={menuStyle} />
+              </div>
             </div>
             <Link to="/"><h2>iReporter</h2></Link>
             <div className="links">
@@ -94,18 +97,18 @@ class NavBar extends Component {
             </div>
           </div>
         </nav>
-        {show
+        {showNav
           && (
           <div className="mobile-nav">
             <p><Link to="/records">Records</Link></p>
             {loggedIn
               && (<p><Link to="/profile">Profile</Link></p>)}
             <p><Link to="/faq">Faq</Link></p>
-            <p><Link to="/create">Add Record</Link></p>
+            {loggedIn && (<p><Link to="/create">Add Record</Link></p>)}
             {!loggedIn && (<p><Link to="/signin">Login</Link></p>)}
             {!loggedIn && (<p><Link to="/signup">Register</Link></p>)}
             {loggedIn
-              && (<p><span role="button" tabIndex={0} onKeyPress={() => { logoutUser(); }} onClick={() => { logoutUser(); }}>Logout</span></p>)}
+              && (<p><span role="button" tabIndex={0} onKeyPress={() => logoutUser()} onClick={() => logoutUser()}>Logout</span></p>)}
           </div>
           )
         }
@@ -119,11 +122,12 @@ class NavBar extends Component {
  * @param {*} state
  * @returns {object} state
  */
-function mapStateToProps({ auth }) {
-  const { loggedIn, closeNav } = auth;
+function mapStateToProps({ auth, recs }) {
+  const { loggedIn } = auth;
+  const { showNav } = recs;
   return {
     loggedIn,
-    closeNav
+    showNav
   };
 }
 
@@ -135,12 +139,17 @@ function mapStateToProps({ auth }) {
 function mapDispatchToProps(dispatch) {
   return (bindActionCreators({
     logoutUser: logout,
+    close: closeNav,
+    open: openNav
   }, dispatch));
 }
 
 NavBar.propTypes = {
   loggedIn: bool.isRequired,
   logoutUser: func.isRequired,
+  close: func.isRequired,
+  open: func.isRequired,
+  showNav: bool.isRequired
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NavBar);

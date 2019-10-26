@@ -13,7 +13,12 @@ import _ from 'underscore';
 
 
 // Import actions
-import { createRecord, clear, getUser } from '../redux/actions';
+import {
+  createRecord,
+  clear,
+  getUser,
+  closeNav,
+} from '../redux/actions';
 
 // Import components
 import Toast from './Toast';
@@ -29,7 +34,9 @@ class Create extends Component {
   componentDidMount() {
     const {
       getOneUser,
+      close
     } = this.props;
+    close();
     getOneUser();
   }
 
@@ -153,6 +160,7 @@ function mapDispatchToProps(dispatch) {
     createNewRecord: createRecord,
     clearError: clear,
     getOneUser: getUser,
+    close: closeNav,
   }, dispatch));
 }
 
@@ -183,6 +191,7 @@ Create.propTypes = {
   error: objectProp.isRequired,
   clearError: func.isRequired,
   formHeader: string.isRequired,
+  close: func.isRequired
 };
 
 

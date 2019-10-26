@@ -7,7 +7,7 @@ import { func, bool, object as objectProp } from 'prop-types';
 import _ from 'underscore';
 
 // Import actions
-import { signUp, clear } from '../redux/actions';
+import { signUp, clear, closeNav } from '../redux/actions';
 
 // Import components
 import Toast from './Toast';
@@ -22,7 +22,8 @@ export class SignUp extends Component {
    * @returns {undefined}
    */
   componentDidMount() {
-    const { clearError } = this.props;
+    const { clearError, close } = this.props;
+    close();
     clearError();
   }
 
@@ -173,6 +174,7 @@ function mapDispatchToProps(dispatch) {
   return (bindActionCreators({
     signUpUser: signUp,
     clearError: clear,
+    close: closeNav
   }, dispatch));
 }
 
@@ -196,6 +198,7 @@ SignUp.propTypes = {
   signedUp: bool.isRequired,
   error: objectProp.isRequired,
   clearError: func.isRequired,
+  close: func.isRequired
 };
 
 export default reduxForm({

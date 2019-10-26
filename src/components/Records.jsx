@@ -8,7 +8,7 @@ import {
 import _ from 'underscore';
 
 // Import actions
-import { getRecords } from '../redux/actions';
+import { getRecords, closeNav } from '../redux/actions';
 
 // Import image
 import add from '../assets/img/add.png';
@@ -26,7 +26,8 @@ export class Records extends Component {
    * @returns {object} Records
    */
   componentDidMount() {
-    const { getAllRecords } = this.props;
+    const { getAllRecords, close } = this.props;
+    close();
     getAllRecords();
   }
 
@@ -98,6 +99,7 @@ export class Records extends Component {
 function mapDispatchToProps(dispatch) {
   return (bindActionCreators({
     getAllRecords: getRecords,
+    close: closeNav
   }, dispatch));
 }
 
@@ -117,6 +119,7 @@ Records.propTypes = {
   getAllRecords: func.isRequired,
   history: objectProp.isRequired,
   loggedIn: bool.isRequired,
+  close: func.isRequired
 };
 
 export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(Records)));

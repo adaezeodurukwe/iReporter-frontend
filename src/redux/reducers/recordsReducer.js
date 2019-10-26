@@ -10,6 +10,8 @@ import {
   DELETE_RECORD,
   UPDATE_STATUS,
   UPDATE_STATUS_ERROR,
+  CLOSE_NAV,
+  OPEN_NAV
 } from '../actions';
 
 export const initialState = {
@@ -18,7 +20,8 @@ export const initialState = {
   error: {},
   created: false,
   updated: false,
-  deleted: false
+  deleted: false,
+  showNav: false
 };
 
 /**
@@ -95,6 +98,16 @@ export const recordReducer = (state = initialState, { type, payload }) => {
         deleted: true,
         created: false,
         updated: false,
+      };
+    case CLOSE_NAV:
+      return {
+        ...state,
+        showNav: payload
+      };
+    case OPEN_NAV:
+      return {
+        ...state,
+        showNav: payload
       };
     default:
       return state;

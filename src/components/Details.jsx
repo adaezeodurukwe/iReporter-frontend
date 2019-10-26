@@ -16,7 +16,7 @@ import {
 import Map from './MapContainer';
 
 // Import Action
-import { getRecord } from '../redux/actions';
+import { getRecord, closeNav } from '../redux/actions';
 
 
 /**
@@ -35,9 +35,10 @@ class Details extends Component {
    * @returns {object} article
    */
   componentDidMount() {
-    const { getSpecificRecord, match } = this.props;
+    const { getSpecificRecord, match, close } = this.props;
     const { id, type } = match.params;
     const recordType = type === 'redflag' ? 'red-flags' : 'interventions';
+    close();
     this.setState({ id, type });
     getSpecificRecord(recordType, id);
   }
@@ -111,6 +112,7 @@ class Details extends Component {
 function mapDispatchToProps(dispatch) {
   return (bindActionCreators({
     getSpecificRecord: getRecord,
+    close: closeNav
   }, dispatch));
 }
 
@@ -127,6 +129,7 @@ function mapStateToProps({ recs }) {
 Details.propTypes = {
   getSpecificRecord: func.isRequired,
   record: objectProp.isRequired,
+  close: func.isRequired,
   match: shape({
     isExact: bool,
     params: objectProp,

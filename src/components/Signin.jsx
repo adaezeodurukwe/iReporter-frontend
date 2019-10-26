@@ -12,7 +12,7 @@ import _ from 'underscore';
 
 
 // Import actions
-import { signIn, clear, close } from '../redux/actions';
+import { signIn, clear, closeNav } from '../redux/actions';
 
 // Import components
 import Toast from './Toast';
@@ -26,9 +26,9 @@ class SignIn extends Component {
    * @returns {undefined}
    */
   componentDidMount() {
-    const { clearError, closeNav } = this.props;
+    const { clearError, close } = this.props;
+    close();
     clearError();
-    closeNav();
   }
 
   clearAuthError = () => {
@@ -138,7 +138,7 @@ function mapDispatchToProps(dispatch) {
   return (bindActionCreators({
     signInUser: signIn,
     clearError: clear,
-    closeNav: close,
+    close: closeNav,
   }, dispatch));
 }
 
@@ -156,7 +156,7 @@ function mapStateToProps({ auth }) {
 }
 
 SignIn.propTypes = {
-  closeNav: func.isRequired,
+  close: func.isRequired,
   signInUser: func.isRequired,
   handleSubmit: func.isRequired,
   history: objectProp.isRequired,

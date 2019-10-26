@@ -17,6 +17,7 @@ import {
   clear,
   updateStatus,
   getUser,
+  closeNav
 } from '../redux/actions';
 
 // import Component
@@ -47,7 +48,9 @@ export class Admin extends Component {
       getOneUser,
       getAllRecords,
       clearErrors,
+      close
     } = this.props;
+    close();
     getOneUser();
     clearErrors();
     getAllRecords();
@@ -298,6 +301,7 @@ function mapDispatchToProps(dispatch) {
     clearErrors: clear,
     getOneUser: getUser,
     updateOne: updateStatus,
+    close: closeNav
   }, dispatch));
 }
 
@@ -334,6 +338,7 @@ Admin.propTypes = {
   error: objectProp.isRequired,
   history: objectProp.isRequired,
   clearErrors: func.isRequired,
+  close: func.isRequired
 };
 
 export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(Admin)));

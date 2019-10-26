@@ -166,6 +166,7 @@ describe('Profile page', () => {
               deleted={false}
               error={{}}
               clearErrors={mockFunction}
+              close={mockFunction}
             />
           </Default>
         </Provider>
@@ -176,7 +177,7 @@ describe('Profile page', () => {
 });
 
 describe('Profile class', () => {
-  it('Profile page should mount admin with articles', () => {
+  it('Profile page should mount with articles', () => {
     const ProfileClass = mount(
       <BrowserRouter>
         <Profile
@@ -192,6 +193,7 @@ describe('Profile class', () => {
           autherror={{}}
           user={user}
           getOneUser={mockFunction}
+          close={mockFunction}
         />
       </BrowserRouter>
     );
@@ -213,6 +215,7 @@ describe('Profile class', () => {
           autherror={{}}
           user={user}
           getOneUser={mockFunction}
+          close={mockFunction}
         />
       </BrowserRouter>
     );
@@ -237,6 +240,7 @@ describe('Admin class', () => {
           user={user}
           getOneUser={mockFunction}
           getAllRecords={mockFunction}
+          close={mockFunction}
         />
       </BrowserRouter>
     );
@@ -257,6 +261,7 @@ describe('Admin class', () => {
           user={user}
           getOneUser={mockFunction}
           getAllRecords={mockFunction}
+          close={mockFunction}
         />
       </BrowserRouter>
     );
@@ -310,13 +315,14 @@ describe('Records page', () => {
 });
 
 describe('Records class', () => {
-  it('Records page should mount admin with articles', () => {
+  it('Records page should mount with articles', () => {
     const RecordsClass = mount(
       <BrowserRouter>
         <Records
           records={responsedata}
           getAllRecords={mockFunction}
           history={{}}
+          close={mockFunction}
         />
       </BrowserRouter>
     );
