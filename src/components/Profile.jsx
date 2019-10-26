@@ -18,7 +18,8 @@ import {
   updateRecord,
   deleteRecord,
   getUser,
-  logout
+  logout,
+  closeNav
 } from '../redux/actions';
 
 // import Component
@@ -45,7 +46,13 @@ export class Profile extends Component {
    * @returns {object} articles
    */
   componentDidMount() {
-    const { getRecords, clearErrors, getOneUser } = this.props;
+    const {
+      getRecords,
+      clearErrors,
+      getOneUser,
+      close
+    } = this.props;
+    close();
     getOneUser();
     clearErrors();
     getRecords();
@@ -278,6 +285,7 @@ function mapDispatchToProps(dispatch) {
     deleteOne: deleteRecord,
     getOneUser: getUser,
     logoutUser: logout,
+    close: closeNav
   }, dispatch));
 }
 
@@ -320,6 +328,7 @@ Profile.propTypes = {
   deleted: bool.isRequired,
   error: objectProp.isRequired,
   clearErrors: func.isRequired,
+  close: func.isRequired
 };
 
 export default (withRouter(connect(mapStateToProps, mapDispatchToProps)(Profile)));

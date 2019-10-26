@@ -21,8 +21,53 @@ nav{
  margin: auto;
 }
 
-.mobile{
+.mobileNavButton{
  display: none;
+ position: absolute;
+ z-index: 1;
+ right: 1rem;
+ top: 1rem;
+ height: 20px;
+ width: 28px;
+ cursor: pointer;
+}
+
+.burger {
+  position: absolute;
+  right: 0;
+  top: 0.4rem;
+  width: 28px;
+  height: 3px;
+  background: #02309B;
+}
+.burger::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    width: 20px;
+    height: 3px;
+    background: #02309B;
+}
+.burger::after {
+    content: '';
+    position: absolute;
+    top: 8px;
+    width: 20px;
+    height: 3px;
+    background: #02309B;
+}
+
+.open {
+  transform: rotate(720deg);
+  background: transparent;
+}
+
+.open::before {
+  transform: rotate(45deg) translate(4px, 8px);
+}
+
+.open::after {
+  transform: rotate(-45deg) translate(3px, -7px);
 }
 
 .mobile-nav{
@@ -32,6 +77,7 @@ nav{
  width: 100%;
  background: #d5edf3;
  z-index: 1;
+ text-align: center;
 }
 
 .mobile-nav p{
@@ -43,7 +89,9 @@ nav{
  text-decoration: none;
  color: #02309B;
  padding: 1%;
+ margin-bottom: 100px;
  cursor: pointer;
+ box-shadow: 0px 15px 10px -15px #acc1c7; 
 }
 
 nav h2{
