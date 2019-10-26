@@ -64,10 +64,12 @@ nav{
 
 .open::before {
   transform: rotate(45deg) translate(4px, 8px);
+  width: 28px;
 }
 
 .open::after {
   transform: rotate(-45deg) translate(3px, -7px);
+  width: 28px;
 }
 
 .mobile-nav{
